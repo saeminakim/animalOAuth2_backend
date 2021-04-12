@@ -24,8 +24,6 @@ public class KakaoController {
 	
 	@PostMapping(value="/kakao/validate")
 	public String validateToken(@RequestBody String accessToken) throws Exception {
-		System.out.println("-------------accessToken--------------");
-		System.out.println(accessToken);
 		
 		URL url = new URL("https://kapi.kakao.com/v1/user/access_token_info");
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -35,17 +33,10 @@ public class KakaoController {
 		byte[] result = con.getInputStream().readAllBytes();
 		String data = new String(result);
 		
-		System.out.println("-------------data--------------");
-		System.out.println(data);
-		
 		if(con.getResponseCode() == 200) {
 			data = getProfile(accessToken);
-			System.out.println("-------------data--------------");
-			System.out.println(data);
 			
 			KakaoUser kakaoUser = new Gson().fromJson(data, KakaoUser.class);
-			System.out.println("-------------kakaoUser--------------");
-			System.out.println(kakaoUser);
 			
 			String sessionId = userService.createProfile(kakaoUser);
 			
@@ -66,9 +57,6 @@ public class KakaoController {
 		
 		byte[] result = con.getInputStream().readAllBytes();
 		String data = new String(result);
-		
-		System.out.println("-------------data--------------");
-		System.out.println(data);
 		
 		return data;
 	}

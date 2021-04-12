@@ -28,8 +28,6 @@ public class UserService {
 		
 		// 기존 프로필 정보 조회해서 없으면 새로 프로필 생성
 		Profile profile = repo.findByUserTypeAndUserId("KAKAO", kakaoUser.getKakao_account().getEmail());
-		System.out.println("----------리파지토리에 프로필 있는지 검색 profile---------");
-		System.out.println(profile);
 		
 		if(profile == null) {
 			profile = Profile.builder()
@@ -40,8 +38,6 @@ public class UserService {
 					.image(kakaoUser.getKakao_account().getProfile().getProfile_image_url())
 					.build();
 			
-			System.out.println("-----------없어서 새로 만든 프로필------------");
-			System.out.println(profile);
 			repo.save(profile);
 		}
 		
